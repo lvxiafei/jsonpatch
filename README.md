@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/gomodules/jsonpatch.svg?branch=master)](https://travis-ci.org/gomodules/jsonpatch)
 [![Go Report Card](https://goreportcard.com/badge/gomodules.xyz/jsonpatch "Go Report Card")](https://goreportcard.com/report/gomodules.xyz/jsonpatch)
-[![GoDoc](https://godoc.org/gomodules.xyz/jsonpatch/v2?status.svg "GoDoc")](https://godoc.org/gomodules.xyz/jsonpatch/v2)
+[![GoDoc](https://godoc.org/gomodules.xyz/jsonpatch/v3?status.svg "GoDoc")](https://godoc.org/gomodules.xyz/jsonpatch/v3)
 
 As per http://jsonpatch.com JSON Patch is specified in RFC 6902 from the IETF.
 
@@ -11,7 +11,7 @@ JSON Patch allows you to generate JSON that describes changes you want to make t
 ## Usage ##
 
 ```go
-import "gomodules.xyz/jsonpatch/v2"
+import "gomodules.xyz/jsonpatch/v3"
 ```
 
 I tried some of the other "jsonpatch" go implementations, but none of them could diff two json documents and generate format like jsonpatch.com specifies. Here's an example of the patch format:
@@ -33,7 +33,7 @@ package main
 
 import (
 	"fmt"
-	"gomodules.xyz/jsonpatch/v2"
+	"gomodules.xyz/jsonpatch/v3"
 )
 
 var simpleA = `{"a":100, "b":200, "c":"hello"}`

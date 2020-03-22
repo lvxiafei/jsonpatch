@@ -1,4 +1,4 @@
-module gomodules.xyz/jsonpatch/v2
+module gomodules.xyz/jsonpatch/v3
 
 go 1.12
 
