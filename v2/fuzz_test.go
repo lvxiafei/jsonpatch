@@ -25,6 +25,7 @@ func FuzzCreatePatch(f *testing.F) {
 }
 
 func checkFuzz(t *testing.T, src, dst []byte) {
+	t.Logf("Test: %v -> %v", string(src), string(dst))
 	patch, err := jsonpatch.CreatePatch(src, dst)
 	if err != nil {
 		// Ok to error, src or dst may be invalid
@@ -37,9 +38,17 @@ func checkFuzz(t *testing.T, src, dst []byte) {
 		return
 	}
 
+	for _, p := range patch {
+		if p.Path == "" {
+			// json-patch doesn't handle this properly, but it is valid
+			return
+		}
+	}
+
 	data, err := json.Marshal(patch)
 	assert.Nil(t, err)
 
+	t.Logf("Applying patch %v", string(data))
 	p2, err := jp.DecodePatch(data)
 	assert.Nil(t, err)
 
