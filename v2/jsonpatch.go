@@ -214,7 +214,7 @@ func handleValues(av, bv interface{}, p string, patch []Operation) ([]Operation,
 		}
 	case []interface{}:
 		bt := bv.([]interface{})
-		if isSimpleArray(at) && isSimpleArray(bt) {
+		if false && isSimpleArray(at) && isSimpleArray(bt) {
 			patch = append(patch, compareEditDistance(at, bt, p)...)
 		} else {
 			n := min(len(at), len(bt))
