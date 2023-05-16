@@ -841,6 +841,10 @@ var (
 	emptyKeyB = `{"":[]}`
 )
 
+var (
+	specialChars = string([]byte{123, 34, 92, 98, 34, 58, 91, 93, 125})
+)
+
 func TestCreatePatch(t *testing.T) {
 	cases := []struct {
 		name string
@@ -888,6 +892,8 @@ func TestCreatePatch(t *testing.T) {
 		{"Null Key uses replace operation", nullKeyA, nullKeyB},
 		// empty key
 		{"Empty key", emptyKeyA, emptyKeyB},
+		// special chars
+		{"Special chars", empty, specialChars},
 	}
 
 	for _, c := range cases {

@@ -1,7 +1,6 @@
 package jsonpatch
 
 import (
-	"bytes"
 	"encoding/json"
 	"fmt"
 	"reflect"
@@ -24,21 +23,28 @@ func (j *Operation) Json() string {
 }
 
 func (j *Operation) MarshalJSON() ([]byte, error) {
-	var b bytes.Buffer
-	b.WriteString("{")
-	b.WriteString(fmt.Sprintf(`"op":"%s"`, j.Operation))
-	b.WriteString(fmt.Sprintf(`,"path":"%s"`, j.Path))
-	// Consider omitting Value for non-nullable operations.
-	if j.Value != nil || j.Operation == "replace" || j.Operation == "add" {
-		v, err := json.Marshal(j.Value)
-		if err != nil {
-			return nil, err
-		}
-		b.WriteString(`,"value":`)
-		b.Write(v)
+	// Ensure for add and replace we emit `value: null`
+	if j.Value == nil && (j.Operation == "replace" || j.Operation == "add") {
+		return json.Marshal(struct {
+			Operation string      `json:"op"`
+			Path      string      `json:"path"`
+			Value     interface{} `json:"value"`
+		}{
+			Operation: j.Operation,
+			Path:      j.Path,
+		})
 	}
-	b.WriteString("}")
-	return b.Bytes(), nil
+	// otherwise just marshal normally. We cannot literally do json.Marshal(j) as it would be recursively
+	// calling this function.
+	return json.Marshal(struct {
+		Operation string      `json:"op"`
+		Path      string      `json:"path"`
+		Value     interface{} `json:"value,omitempty"`
+	}{
+		Operation: j.Operation,
+		Path:      j.Path,
+		Value:     j.Value,
+	})
 }
 
 type ByPath []Operation
