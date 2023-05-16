@@ -836,6 +836,11 @@ var (
 }`
 )
 
+var (
+	emptyKeyA = `{"":[0]}`
+	emptyKeyB = `{"":[]}`
+)
+
 func TestCreatePatch(t *testing.T) {
 	cases := []struct {
 		name string
@@ -881,6 +886,8 @@ func TestCreatePatch(t *testing.T) {
 		{"Array at root", `[{"asdf":"qwerty"}]`, `[{"asdf":"bla"},{"asdf":"zzz"}]`},
 		{"Empty array at root", `[]`, `[{"asdf":"bla"},{"asdf":"zzz"}]`},
 		{"Null Key uses replace operation", nullKeyA, nullKeyB},
+		// empty key
+		{"Empty key", emptyKeyA, emptyKeyB},
 	}
 
 	for _, c := range cases {

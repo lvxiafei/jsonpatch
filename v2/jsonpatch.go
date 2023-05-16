@@ -149,9 +149,6 @@ func makePath(path string, newPart interface{}) string {
 	if path == "" {
 		return "/" + key
 	}
-	if strings.HasSuffix(path, "/") {
-		return path + key
-	}
 	return path + "/" + key
 }
 
